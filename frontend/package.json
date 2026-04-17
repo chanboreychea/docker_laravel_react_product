@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/core": "^1.4.0",
+    "@tabler/icons-react": "^3.41.1",
     "axios": "^1.15.0",
     "laravel-echo": "^2.3.4",
     "pusher-js": "^8.5.0",

@@ -1,9 +1,12 @@
-import "./App.css";
-import Product from "./components/Product";
+import MasterLayout from "./layouts/MasterLayout";
+import Product from "./pages/Product";
 
 function App() {
+  // Change layoutType to "sidebar" or "navbar" to switch between layouts dynamically!
   return (
-    <Product />
+    <MasterLayout layoutType="navbar">
+      <Product />
+    </MasterLayout>
   );
 }
 
