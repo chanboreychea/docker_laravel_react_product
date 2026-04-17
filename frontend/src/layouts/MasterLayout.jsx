@@ -1,8 +1,14 @@
 import React from "react";
 import "@tabler/core/dist/css/tabler.min.css";
+import { useTranslation } from "react-i18next";
 
 // layoutType can be 'navbar' or 'sidebar'
 export default function MasterLayout({ children, layoutType = "navbar" }) {
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "km" : "en");
+  };
 
   // === SIDEBAR (VERTICAL) LAYOUT ===
   const renderSidebar = () => (
@@ -17,9 +23,14 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
           <span className="navbar-toggler-icon"></span>
         </button>
         <h1 className="navbar-brand navbar-brand-autodark">
-          <a href="/">Product Dashboard</a>
+          <a href="/">{t('product_dashboard')}</a>
         </h1>
         <div className="navbar-nav flex-row d-lg-none">
+          <div className="nav-item">
+            <button className="btn btn-sm btn-outline-secondary me-2" onClick={toggleLanguage}>
+              {i18n.language === "en" ? "KM" : "EN"}
+            </button>
+          </div>
           <div className="nav-item">
             <span
               className="avatar avatar-sm"
@@ -31,7 +42,7 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
           <ul className="navbar-nav pt-lg-3">
             <li className="nav-item active">
               <a className="nav-link" href="/">
-                <span className="nav-link-title">Products</span>
+                <span className="nav-link-title">{t('products')}</span>
               </a>
             </li>
           </ul>
@@ -54,9 +65,14 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <h1 className="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="/">Product Dashboard</a>
+            <a href="/">{t('product_dashboard')}</a>
           </h1>
           <div className="navbar-nav flex-row order-md-last">
+            <div className="nav-item d-none d-md-flex me-3">
+              <button className="btn btn-sm btn-outline-secondary" onClick={toggleLanguage}>
+                {i18n.language === "en" ? "KM" : "EN"}
+              </button>
+            </div>
             <div className="nav-item">
               <a href="#" className="nav-link d-flex lh-1 text-reset p-0">
                 <span
@@ -64,8 +80,8 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
                   style={{ backgroundImage: "url(https://i.pravatar.cc/150)" }}
                 ></span>
                 <div className="d-none d-xl-block ps-2">
-                  <div>Admin User</div>
-                  <div className="mt-1 small text-muted">System Administrator</div>
+                  <div>{t('admin_user')}</div>
+                  <div className="mt-1 small text-muted">{t('system_admin')}</div>
                 </div>
               </a>
             </div>
@@ -81,7 +97,7 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
               <ul className="navbar-nav">
                 <li className="nav-item active">
                   <a className="nav-link" href="/">
-                    <span className="nav-link-title">Products</span>
+                    <span className="nav-link-title">{t('products')}</span>
                   </a>
                 </li>
               </ul>
@@ -113,6 +129,11 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="navbar-nav flex-row order-md-last ms-auto">
+                <div className="nav-item d-none d-md-flex me-3">
+                  <button className="btn btn-sm btn-outline-secondary" onClick={toggleLanguage}>
+                    {i18n.language === "en" ? "KM" : "EN"}
+                  </button>
+                </div>
                 <div className="nav-item">
                   <a href="#" className="nav-link d-flex lh-1 text-reset p-0">
                     <span
@@ -120,8 +141,8 @@ export default function MasterLayout({ children, layoutType = "navbar" }) {
                       style={{ backgroundImage: "url(https://i.pravatar.cc/150)" }}
                     ></span>
                     <div className="d-none d-xl-block ps-2">
-                      <div>Admin User</div>
-                      <div className="mt-1 small text-muted">System Administrator</div>
+                      <div>{t('admin_user')}</div>
+                      <div className="mt-1 small text-muted">{t('system_admin')}</div>
                     </div>
                   </a>
                 </div>

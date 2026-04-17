@@ -1,6 +1,7 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import echo from "../echo";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import PageHeader from "../components/ui/PageHeader";
@@ -8,6 +9,7 @@ import PageHeader from "../components/ui/PageHeader";
 const API = "http://127.0.0.1:8000/api/products";
 
 function ProductCRUD() {
+  const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState({ name: "", price: "", qty: "" });
   const [editId, setEditId] = useState(null);
@@ -88,49 +90,49 @@ function ProductCRUD() {
 
   return (
     <>
-      <PageHeader title="Product Management" />
+      <PageHeader title={t("product_management")} />
 
       <div className="row row-cards">
         {/* FORM SECTION */}
         <div className="col-md-4">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">{editId ? "Update Product" : "Add New Product"}</h3>
+              <h3 className="card-title">{editId ? t("update_product") : t("add_new_product")}</h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label required">Product Name</label>
+                  <label className="form-label required">{t("product_name")}</label>
                   <input
                     type="text"
                     className="form-control"
                     name="name"
-                    placeholder="E.g. Wireless Mouse"
+                    placeholder={t("product_name_placeholder")}
                     value={form.name}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label required">Price ($)</label>
+                  <label className="form-label required">{t("price")}</label>
                   <input
                     type="number"
                     step="0.01"
                     className="form-control"
                     name="price"
-                    placeholder="E.g. 29.99"
+                    placeholder={t("price_placeholder")}
                     value={form.price}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label required">Quantity</label>
+                  <label className="form-label required">{t("qty")}</label>
                   <input
                     type="number"
                     className="form-control"
                     name="qty"
-                    placeholder="E.g. 100"
+                    placeholder={t("qty_placeholder")}
                     value={form.qty}
                     onChange={handleChange}
                     required
@@ -138,7 +140,7 @@ function ProductCRUD() {
                 </div>
                 <div className="form-footer mt-4">
                   <button type="submit" className="btn btn-primary w-100">
-                    {editId ? "Update Product" : "Save Product"}
+                    {editId ? t("update_product") : t("save_product")}
                   </button>
                   {editId && (
                     <button 
@@ -146,7 +148,7 @@ function ProductCRUD() {
                       className="btn btn-link w-100 mt-2" 
                       onClick={() => { setEditId(null); setForm({ name: "", price: "", qty: "" }); }}
                     >
-                      Cancel Edit
+                      {t("cancel_edit")}
                     </button>
                   )}
                 </div>
@@ -159,24 +161,24 @@ function ProductCRUD() {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">Inventory</h3>
+              <h3 className="card-title">{t("inventory")}</h3>
             </div>
             <div className="table-responsive">
               <table className="table card-table table-vcenter text-nowrap datatable">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th className="w-1">Actions</th>
+                    <th>{t("id")}</th>
+                    <th>{t("name")}</th>
+                    <th>{t("price_col")}</th>
+                    <th>{t("qty_col")}</th>
+                    <th className="w-1">{t("actions")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.length === 0 ? (
                     <tr>
                       <td colSpan="5" className="text-center text-muted p-4">
-                        No products available. Add one to get started!
+                        {t("no_products")}
                       </td>
                     </tr>
                   ) : (
@@ -223,15 +225,16 @@ function ProductCRUD() {
       {/* REUSABLE DELETE MODAL */}
       <ConfirmModal
         show={showDeleteModal}
-        title="Are you sure?"
+        title={t("are_you_sure")}
         message={
           <>
-            Do you really want to delete <strong>{productToDelete?.name}</strong>? This action cannot be undone.
+            {t("really_want_delete", { name: productToDelete?.name })} {t("cannot_be_undone")}
           </>
         }
         onConfirm={confirmDelete}
         onCancel={() => setShowDeleteModal(false)}
-        confirmText="Delete"
+        confirmText={t("delete")}
+        cancelText={t("cancel")}
       />
     </>
   );
