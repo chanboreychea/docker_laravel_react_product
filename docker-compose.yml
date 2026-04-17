@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: product_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+    env_file:
+      - ./backend/.env
+    environment:
+      - REDIS_HOST=redis
+      - REVERB_HOST=reverb
+    depends_on:
+      - redis
+    networks:
+      - app-network
+      - mysql_default
+
+  reverb:
+    build:
+      context: ./backend
+    container_name: product_reverb
+    command: php artisan reverb:start --host=0.0.0.0 --port=8085
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./backend:/var/www
+    env_file:
+      - ./backend/.env
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - app-network
+      - mysql_default
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: product_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    container_name: product_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+  mysql_default:
+    external: true
