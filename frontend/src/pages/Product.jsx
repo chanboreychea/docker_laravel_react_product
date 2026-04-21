@@ -2,9 +2,9 @@ import { IconEdit, IconTrash } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import echo from "../echo";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import PageHeader from "../components/ui/PageHeader";
+import echo from "../echo";
 
 const API = "http://127.0.0.1:8000/api/products";
 
@@ -97,12 +97,16 @@ function ProductCRUD() {
         <div className="col-md-4">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">{editId ? t("update_product") : t("add_new_product")}</h3>
+              <h3 className="card-title">
+                {editId ? t("update_product") : t("add_new_product")}
+              </h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label required">{t("product_name")}</label>
+                  <label className="form-label required">
+                    {t("product_name")}
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -143,11 +147,13 @@ function ProductCRUD() {
                     {editId ? t("update_product") : t("save_product")}
                   </button>
                   {editId && (
-                    <button 
-                      type="button" 
-                      className="btn btn-link w-100 mt-2" 
-                      onClick={() => { setEditId(null); setForm({ name: "", price: "", qty: "" }); }}
-                    >
+                    <button
+                      type="button"
+                      className="btn btn-link w-100 mt-2"
+                      onClick={() => {
+                        setEditId(null);
+                        setForm({ name: "", price: "", qty: "" });
+                      }}>
                       {t("cancel_edit")}
                     </button>
                   )}
@@ -161,7 +167,7 @@ function ProductCRUD() {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">{t("inventory")}</h3>
+              <h3 className="card-title">{t("product_list")}</h3>
             </div>
             <div className="table-responsive">
               <table className="table card-table table-vcenter text-nowrap datatable">
@@ -184,13 +190,14 @@ function ProductCRUD() {
                   ) : (
                     products.map((p) => (
                       <tr key={p.id}>
-                        <td><span className="text-muted">{p.id}</span></td>
-                        <td>{p.name}</td>
                         <td>
-                          ${Number(p.price).toFixed(2)}
+                          <span className="text-muted">{p.id}</span>
                         </td>
+                        <td>{p.name}</td>
+                        <td>${Number(p.price).toFixed(2)}</td>
                         <td>
-                          <span className={`badge ${p.qty > 0 ? "bg-green-lt" : "bg-red-lt"}`}>
+                          <span
+                            className={`badge ${p.qty > 0 ? "bg-green-lt" : "bg-red-lt"}`}>
                             {p.qty}
                           </span>
                         </td>
@@ -199,15 +206,13 @@ function ProductCRUD() {
                             <button
                               className="btn btn-icon btn-outline-primary shadow-none"
                               onClick={() => handleEdit(p)}
-                              title="Edit"
-                            >
+                              title="Edit">
                               <IconEdit size={16} />
                             </button>
                             <button
                               className="btn btn-icon btn-outline-danger shadow-none"
                               onClick={() => promptDelete(p)}
-                              title="Delete"
-                            >
+                              title="Delete">
                               <IconTrash size={16} />
                             </button>
                           </div>
@@ -228,7 +233,8 @@ function ProductCRUD() {
         title={t("are_you_sure")}
         message={
           <>
-            {t("really_want_delete", { name: productToDelete?.name })} {t("cannot_be_undone")}
+            {t("really_want_delete", { name: productToDelete?.name })}{" "}
+            {t("cannot_be_undone")}
           </>
         }
         onConfirm={confirmDelete}
